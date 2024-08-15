@@ -3,8 +3,7 @@ import { w } from "windstitch";
 export const Button = w.button(
     `
         flex 
-        items-center 
-        justify-between
+        items-center
     `,
     {
         variants: {
@@ -13,7 +12,7 @@ export const Button = w.button(
                     border-none
                 `,
                 border: `
-                
+                    
                 `,
                 text: `
                     border-none
@@ -26,11 +25,20 @@ export const Button = w.button(
                 simple: `
                     rounded-lg
                 `
+            },
+            Justify: {
+                center: `
+                    justify-center
+                `,
+                between: `
+                    justify-between
+                `
             }
         },
         defaultVariants: {
             type: 'primary',
             rounded: 'simple',
+            Justify: 'center',
         }
     }
 );
