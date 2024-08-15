@@ -28,3 +28,39 @@
 #checkbox:checked + .toggle {
     transform: rotate(-90deg);
 }
+
+.oppenTools {
+    animation: OppenTools 3s ease-in-out ;
+    min-width: 120px;
+    height: auto;
+}
+
+.closseTools {
+    animation: ClosseTools 3s ease-in-out ;
+}
+
+@keyframes OppenTools {
+    0% {
+        display: flex;
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        min-width: 120px;
+        height: auto;
+    }
+}
+
+@keyframes ClosseTools {
+    0% {
+        min-width: 120px;
+        height: auto;
+    }
+
+    100% {
+        display: none;
+        width: 0px;
+        height: 0px;
+    }
+}
