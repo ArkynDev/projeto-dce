@@ -4,6 +4,8 @@ export const Button = w.button(
     `
         flex 
         items-center
+        transition-all
+        duration-300
     `,
     {
         variants: {
