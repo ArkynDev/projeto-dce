@@ -1,0 +1,11 @@
+.textHolder {
+    font-size: clamp(0.8rem, 2vw, 1.4rem) !important;
+}
+
+.cardPDF {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}

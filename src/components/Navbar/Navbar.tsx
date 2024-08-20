@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom";
 
 import { Button } from "../ui/Button";
@@ -9,10 +9,15 @@ import './style.css';
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpenTools, setIsOpenTools] = useState(false);
+    const headerRef = useRef<HTMLDivElement>(null);
 
     const toggleOpenTools = () => {
         setIsOpenTools(prevState => !prevState);
     };
+
+    const ToogleClossedTools = () => {
+        setIsOpenTools(false);
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,6 +32,19 @@ export const Navbar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+                ToogleClossedTools(); // Fecha o menu de ferramentas
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     const scrolledClasses = isScrolled ? 'bg-gray-200 w-[50%] h-[40px] text-black' : 'bg-white h-[55px] w-[55%] text-black';
 
     const bntConfig = isScrolled ? 'h-8 w-8' : 'h-12 w-12';
@@ -37,18 +55,18 @@ export const Navbar = () => {
     const toolsConfig = isScrolled ? 'top-[45px]' : 'top-[60px]';
 
     return(
-        <header className={`md:fixed lg:flex sm:hidden sticky top-[12px] left-[50%] translate-x-[-50%] rounded-full shadow-md transition-all duration-300 ${scrolledClasses}`}>
+        <header ref={headerRef} className={`md:fixed lg:flex sm:hidden sticky top-[12px] left-[50%] translate-x-[-50%] rounded-full shadow-md transition-all duration-300 ${scrolledClasses}`}>
             <div className="flex items-center justify-between w-full h-full px-2 z-10">
                 <a href="">Logo</a>
                 <ul className="flex relative gap-4">
-                    <li className="relative after:absolute after:bg-green-600 after:h-[3px] after:w-0 after:left-0 after:bottom-[-10px] after:rounded-lg hover:font-bold hover:after:w-full"><Link to={"/"}>Inicio</Link></li>
+                    <li className="relative after:absolute after:bg-green-600 after:h-[3px] after:w-0 after:left-0 after:bottom-[-10px] after:rounded-lg hover:font-bold hover:after:w-full"><Link to={"/"} onClick={ToogleClossedTools}>Inicio</Link></li>
                     <li className="relative after:absolute after:bg-green-600 after:h-[3px] after:w-0 after:left-0 after:bottom-[-10px] after:rounded-lg hover:font-bold hover:after:w-full">Estudante</li>
                     <li className="relative after:absolute after:bg-green-600 after:h-[3px] after:w-0 after:left-0 after:bottom-[-10px] after:rounded-lg hover:font-bold hover:after:w-full">Transparência</li>
                     <li className="flex justify-center relative after:absolute after:bg-green-600 after:h-[3px] after:w-0 after:left-0 after:bottom-[-10px] after:rounded-lg hover:font-bold hover:after:w-full">
                         <Button children={<><ChevronDown className={`transition-all duration-300 ${chevronConfig}`} /> Ferramentas</>} onClick={toggleOpenTools} />
                         <ul className={`toolsMenu transition-all duration-300 gap-3 flex-col absolute ${toolsConfig} ${toolsShow}`}>
                             <li className="hover:bg-green-300 rounded-md text-center w-full py-1">
-                                <Link to={"PDFMenu"}>PDF</Link>
+                                <Link to={"PDFMenu"} onClick={ToogleClossedTools}>PDF</Link>
                             </li>
                             <li className="hover:bg-green-300 rounded-md text-center w-full py-1">
                                 Ferramenta 2
